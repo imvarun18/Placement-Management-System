@@ -1,10 +1,10 @@
 /* ============================================
    API Configuration & Global Variables
    ============================================ */
-const API_BASE_URL = 'http://localhost:8085/api';
+const API_BASE_URL = 'http://localhost:8085/api/users';
 const ENDPOINTS = {
-    ADD_USER: '/addUser',
-    GET_ALL_USERS: '/getAllUser'
+    ADD_USER: '',
+    GET_ALL_USERS: ''
 };
 
 let allStudents = [];
@@ -146,6 +146,11 @@ function handleAddStudent(e) {
     
     const name = document.getElementById('studentName').value.trim();
     const rollNumber = document.getElementById('rollNumber').value.trim();
+    const email = document.getElementById('studentEmail').value.trim();
+    const phone = document.getElementById('studentPhone').value.trim();
+    const placementStatus = document.getElementById('placementStatus').value.trim();
+    const company = document.getElementById('company').value.trim();
+    const placementDate = document.getElementById('placementDate').value.trim();
     
     // Validation
     if (!validateForm(name, rollNumber)) {
@@ -153,7 +158,7 @@ function handleAddStudent(e) {
     }
     
     // Add student via API
-    addStudent(name, rollNumber);
+    addStudent(name, rollNumber, email, phone, placementStatus, company, placementDate);
 }
 
 function validateForm(name, rollNumber) {
@@ -203,14 +208,19 @@ function clearFormErrors() {
     document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
 }
 
-async function addStudent(name, rollNumber) {
+async function addStudent(name, rollNumber, email, phone, placementStatus, company, placementDate) {
     const studentData = {
         name: name,
-        rollNumber: rollNumber
+        rollNumber: rollNumber,
+        email: email || null,
+        phone: phone || null,
+        placementStatus: placementStatus || null,
+        company: company || null,
+        placementDate: placementDate || null
     };
     
     try {
-        const response = await fetch(`${API_BASE_URL}${ENDPOINTS.ADD_USER}`, {
+        const response = await fetch(`${API_BASE_URL}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -243,7 +253,7 @@ async function addStudent(name, rollNumber) {
 
 async function loadStudents() {
     try {
-        const response = await fetch(`${API_BASE_URL}${ENDPOINTS.GET_ALL_USERS}`);
+        const response = await fetch(`${API_BASE_URL}`);
         
         if (!response.ok) {
             throw new Error('Failed to load students');
@@ -267,7 +277,7 @@ function renderStudentsTable(students) {
     if (students.length === 0) {
         tbody.innerHTML = `
             <tr class="empty-row">
-                <td colspan="4" class="empty-state">
+                <td colspan="7" class="empty-state">
                     <i class="fas fa-inbox"></i>
                     <p>No students enrolled yet</p>
                 </td>
@@ -281,7 +291,10 @@ function renderStudentsTable(students) {
         <tr>
             <td><strong>${escapeHtml(student.rollNumber)}</strong></td>
             <td>${escapeHtml(student.name)}</td>
-            <td><code>${escapeHtml(student.userId || 'N/A')}</code></td>
+            <td>${escapeHtml(student.email || '-')}</td>
+            <td>${escapeHtml(student.phone || '-')}</td>
+            <td><span class="status-badge status-${(student.placementStatus || 'pending').toLowerCase()}">${escapeHtml(student.placementStatus || 'Pending')}</span></td>
+            <td>${escapeHtml(student.company || '-')}</td>
             <td>
                 <div class="action-buttons">
                     <button class="btn btn-primary btn-small" onclick="viewStudentDetails('${escapeHtml(student.userId)}')">
@@ -317,23 +330,40 @@ function handleSearch(e) {
 function viewStudentDetails(userId) {
     const student = allStudents.find(s => s.userId === userId);
     if (student) {
-        const details = `
-Name: ${student.name}
+        const details = `Name: ${student.name}
 Roll Number: ${student.rollNumber}
-User ID: ${student.userId}
-        `;
+Email: ${student.email || 'N/A'}
+Phone: ${student.phone || 'N/A'}
+Placement Status: ${student.placementStatus || 'Pending'}
+Company: ${student.company || 'N/A'}
+Placement Date: ${student.placementDate || 'N/A'}
+User ID: ${student.userId}`;
         alert(details);
         addActivity('view', `Viewed student: ${student.name}`);
     }
 }
 
-function deleteStudent(userId, studentName) {
+async function deleteStudent(userId, studentName) {
     if (confirm(`Are you sure you want to delete ${studentName}?`)) {
-        allStudents = allStudents.filter(s => s.userId !== userId);
-        renderStudentsTable(allStudents);
-        addActivity('remove', `Deleted student: ${studentName}`);
-        showToast(`Student ${studentName} deleted successfully!`, 'success');
-        updateDashboardStats();
+        try {
+            const response = await fetch(`${API_BASE_URL}/${userId}`, {
+                method: 'DELETE'
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to delete student');
+            }
+            
+            allStudents = allStudents.filter(s => s.userId !== userId);
+            renderStudentsTable(allStudents);
+            addActivity('remove', `Deleted student: ${studentName}`);
+            showToast(`Student ${studentName} deleted successfully!`, 'success');
+            updateDashboardStats();
+        } catch (error) {
+            console.error('Error deleting student:', error);
+            showToast('Error deleting student: ' + error.message, 'error');
+            loadStudents();
+        }
     }
 }
 

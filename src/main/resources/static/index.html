@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-briefcase"></i>
+                <span>Placement Management System</span>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#dashboard" class="nav-link active" data-section="dashboard">Dashboard</a></li>
+                    <li><a href="#students" class="nav-link" data-section="students">Students</a></li>
+                    <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="section-header">
+                <h1>Dashboard</h1>
+                <p>Welcome to the Placement Management System</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Total Students</h3>
+                        <p class="stat-number" id="totalStudents">0</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Registered</h3>
+                        <p class="stat-number" id="registeredCount">0</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Success Rate</h3>
+                        <p class="stat-number" id="successRate">0%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-activity">
+                <h2>Recent Activity</h2>
+                <div id="activityLog" class="activity-list">
+                    <p class="empty-state">No recent activity</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Students Section -->
+        <section id="students" class="section">
+            <div class="section-header">
+                <h1>Student Management</h1>
+                <p>Manage student records for placement</p>
+            </div>
+
+            <!-- Add Student Form -->
+            <div class="form-container">
+                <h2>Add New Student</h2>
+                <form id="studentForm" class="student-form">
+                    <div class="form-group">
+                        <label for="studentName">Name *</label>
+                        <input 
+                            type="text" 
+                            id="studentName" 
+                            name="name" 
+                            placeholder="Enter student name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rollNumber">Roll Number *</label>
+                        <input 
+                            type="text" 
+                            id="rollNumber" 
+                            name="rollNumber" 
+                            placeholder="Enter roll number"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Student
+                        </button>
+                        <button type="reset" class="btn btn-secondary">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search by name or roll number..."
+                    >
+                </div>
+            </div>
+
+            <!-- Students Table -->
+            <div class="table-container">
+                <h2>Enrolled Students</h2>
+                <div id="studentsTableWrapper" class="table-wrapper">
+                    <table class="students-table">
+                        <thead>
+                            <tr>
+                                <th>Roll Number</th>
+                                <th>Name</th>
+                                <th>User ID</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody">
+                            <tr class="empty-row">
+                                <td colspan="4" class="empty-state">
+                                    <i class="fas fa-inbox"></i>
+                                    <p>No students enrolled yet</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <p id="studentCount">Showing 0 students</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="section-header">
+                <h1>About</h1>
+                <p>Learn more about this system</p>
+            </div>
+
+            <div class="about-content">
+                <div class="about-card">
+                    <h2>What is this System?</h2>
+                    <p>
+                        The Placement Management System is a comprehensive platform designed to manage 
+                        student information for college placement drives. It helps track student records, 
+                        manage registrations, and maintain placement statistics.
+                    </p>
+                </div>
+
+                <div class="about-card">
+                    <h2>Features</h2>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> Add and manage student records</li>
+                        <li><i class="fas fa-check"></i> Track student information</li>
+                        <li><i class="fas fa-check"></i> Search and filter students</li>
+                        <li><i class="fas fa-check"></i> View placement statistics</li>
+                        <li><i class="fas fa-check"></i> Real-time data updates</li>
+                        <li><i class="fas fa-check"></i> Responsive design</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h2>Technology Stack</h2>
+                    <ul class="tech-list">
+                        <li><strong>Backend:</strong> Spring Boot 3.3.2, MongoDB</li>
+                        <li><strong>Frontend:</strong> HTML5, CSS3, Vanilla JavaScript</li>
+                        <li><strong>Database:</strong> MongoDB</li>
+                        <li><strong>Java Version:</strong> 17</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

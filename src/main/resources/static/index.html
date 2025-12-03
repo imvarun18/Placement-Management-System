@@ -85,26 +85,83 @@
             <div class="form-container">
                 <h2>Add New Student</h2>
                 <form id="studentForm" class="student-form">
-                    <div class="form-group">
-                        <label for="studentName">Name *</label>
-                        <input 
-                            type="text" 
-                            id="studentName" 
-                            name="name" 
-                            placeholder="Enter student name"
-                            required
-                        >
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentName">Name *</label>
+                            <input 
+                                type="text" 
+                                id="studentName" 
+                                name="name" 
+                                placeholder="Enter student name"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rollNumber">Roll Number *</label>
+                            <input 
+                                type="text" 
+                                id="rollNumber" 
+                                name="rollNumber" 
+                                placeholder="Enter roll number"
+                                required
+                            >
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="rollNumber">Roll Number *</label>
-                        <input 
-                            type="text" 
-                            id="rollNumber" 
-                            name="rollNumber" 
-                            placeholder="Enter roll number"
-                            required
-                        >
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentEmail">Email</label>
+                            <input 
+                                type="email" 
+                                id="studentEmail" 
+                                name="email" 
+                                placeholder="Enter email address"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="studentPhone">Phone</label>
+                            <input 
+                                type="tel" 
+                                id="studentPhone" 
+                                name="phone" 
+                                placeholder="Enter phone number"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="placementStatus">Placement Status</label>
+                            <select id="placementStatus" name="placementStatus">
+                                <option value="">Select status</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Placed">Placed</option>
+                                <option value="Not Placed">Not Placed</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input 
+                                type="text" 
+                                id="company" 
+                                name="company" 
+                                placeholder="Enter company name"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="placementDate">Placement Date</label>
+                            <input 
+                                type="date" 
+                                id="placementDate" 
+                                name="placementDate"
+                            >
+                        </div>
                     </div>
 
                     <div class="form-actions">
@@ -137,13 +194,16 @@
                             <tr>
                                 <th>Roll Number</th>
                                 <th>Name</th>
-                                <th>User ID</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Company</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="studentsTableBody">
                             <tr class="empty-row">
-                                <td colspan="4" class="empty-state">
+                                <td colspan="7" class="empty-state">
                                     <i class="fas fa-inbox"></i>
                                     <p>No students enrolled yet</p>
                                 </td>
